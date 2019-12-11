@@ -59,6 +59,20 @@ function appendValuesToSheet(spreadsheetId, range, arrayOfArrayValues) {
 
 exports.testPromises = functions.https.onRequest((request, response) => {
 
+    // Testing promises
+    var a_promise = new Promise(function(resolve, reject) {
+        reject("I failed")
+    })
+
+    a_promise.then(function(result, error) {
+        console.log(result + 1)
+        console.log("ERROR", error)
+        return a_promise
+    }).then(function(result) {
+        console.log(result + 2)
+        return a_promise
+    })
+
     updateCells(spreadsheetId, "Inventory!G5", [
         ["Aidan"]
     ]).then(function(response) {
@@ -67,7 +81,7 @@ exports.testPromises = functions.https.onRequest((request, response) => {
         ])
     }).then(function(response) {
         updateCells(spreadsheetId, "Inventory!H7", [
-            ["David"]
+            ["Telegraph"]
         ])
     })
     // appendValuesToSheet(spreadsheetId, "A1:D500", [
