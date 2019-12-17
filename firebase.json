@@ -1,4 +1,12 @@
 {
+  "emulators": {
+    "functions": {
+      "port": "5002"
+    },
+    "hosting": {
+      "port": "5003"
+    }
+  },
   "functions": {
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint"
