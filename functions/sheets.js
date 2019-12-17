@@ -31,35 +31,33 @@ module.exports = class Sheets {
     }
   }
 
-  // Params:
-  // "range": {
-  //        sheetId: 0
-  //      }
-  //"criteria": {
-  //        2: {
-  //          "hiddenValues": ["Aidan"]
-  //        }
-  //      }
-  setBasicFilter(range, criteria) {
-    let requests = [];
-    requests.push({
-      "setBasicFilter": {
-        "filter": {
-          "range": range,
-          "criteria": criteria
-        }
-      },
-    });
+  /*********************************
+   ** Update a range of cells
+   * 
+   *  Returns a response object
+   * data: { spreadsheetId: '1H2-Bo6LhYNEs4zUVmLkbH3F0t1mPoCpZMBA1DBap7A8',
+   *    updatedRange: 'Inventory!G5',
+   *   updatedRows: 1,
+   *  updatedColumns: 1,
+   *  updatedCells: 1 }
+   **********************************
+  // range needs to be in format "A1:A500"
+  // values need to be an array of arrays, e.g. [["David", "21", "Mexico"], ["Margaret", "38", "New York"], ["Janice", "87", "Oklahoma"]]
+  // Example:
+  // appendValuesToSheet("1azYt9zUxNhyacmyoyboS7I9AFEMFE-Fo5gEkkQIOh_8", "A1:D500", [["David", "21", "Mexico"], ["Margaret", "38", "New York"], ["Janice", "87", "Oklahoma"]])*/
 
-    return this._sheetsApi.spreadsheets.batchUpdate({
+  appendValuesToSheet(range, arrayOfArrayValues) {
+    return this._sheetsApi.spreadsheets.values.append({
       spreadsheetId: this.spreadsheetId,
-      "resource": {
-        requests
+      range: range,
+      insertDataOption: "INSERT_ROWS",
+      valueInputOption: "USER_ENTERED",
+      resource: {
+        values: arrayOfArrayValues
       }
-
     })
   }
-
+  
   // takes objects containing key value pairs and puts them into the *args array:
   // { 
   //    "range": "A2:B2",
@@ -107,13 +105,43 @@ module.exports = class Sheets {
       resource: {
         values: arrayOfArrayValues
       }
-    }, (error, response) => {
-      if (error) {
-        reject(new Error("The api threw an error" + error))
-      }
-      resolve(response);
     })
   }
+  
+  
+  
+  
+  // Params:
+  // "range": {
+  //        sheetId: 0
+  //      }
+  //  In criteria, the key for each object is the column to be looked at, starting at index 0. So A is 0, B is 1, C is 2, and so on:
+  
+  //"criteria": {
+  //        2: {
+  //          "hiddenValues": ["Aidan"]
+  //        }
+  //      }
+  setBasicFilter(range, criteria) {
+    let requests = [];
+    requests.push({
+      "setBasicFilter": {
+        "filter": {
+          "range": range,
+          "criteria": criteria
+        }
+      },
+    });
+
+    return this._sheetsApi.spreadsheets.batchUpdate({
+      spreadsheetId: this.spreadsheetId,
+      "resource": {
+        requests
+      }
+    })
+  }
+
+
   getRowsHiddenByFilter(callback) {
     var fields = "sheets(data(rowMetadata(hiddenByFilter)),properties/sheetId)";
     let hiddenRows = [];
@@ -147,7 +175,7 @@ module.exports = class Sheets {
           rows.push(valueRange.values[0])
         })
         callback(rows);
-        
+
       }, function(error) {
         callback(error)
       })
@@ -160,11 +188,11 @@ module.exports = class Sheets {
     var range = {
       sheetId: this.worksheetId
     }
-    var criteria = { };
-    criteria [this.getColumnNumber[column]] ={
-          "hiddenValues": wordsToMatch
-      }
-    
+    var criteria = {};
+    criteria[this.getColumnNumber[column]] = {
+      "hiddenValues": wordsToMatch
+    }
+
     this.setBasicFilter(range, criteria).then(function(result) {
       self.getRowsHiddenByFilter(callback);
     }, function(error) {
@@ -173,33 +201,6 @@ module.exports = class Sheets {
   }
 
 
-  /*********************************
-   ** Update a range of cells
-   * 
-   *  Returns a response objectm 
-   * data: { spreadsheetId: '1H2-Bo6LhYNEs4zUVmLkbH3F0t1mPoCpZMBA1DBap7A8',
-   *    updatedRange: 'Inventory!G5',
-   *   updatedRows: 1,
-   *  updatedColumns: 1,
-   *  updatedCells: 1 }
-   **********************************
-  // range needs to be in format "A1:A500"
-  // values need to be an array of arrays, e.g. [["David", "21", "Mexico"], ["Margaret", "38", "New York"], ["Janice", "87", "Oklahoma"]]
-  // Example:
-  // appendValuesToSheet("1azYt9zUxNhyacmyoyboS7I9AFEMFE-Fo5gEkkQIOh_8", "A1:D500", [["David", "21", "Mexico"], ["Margaret", "38", "New York"], ["Janice", "87", "Oklahoma"]])*/
-
-
-  appendValuesToSheet(range, arrayOfArrayValues) {
-    return this._sheetsApi.spreadsheets.values.append({
-      spreadsheetId: this.spreadsheetId,
-      range: range,
-      insertDataOption: "INSERT_ROWS",
-      valueInputOption: "USER_ENTERED",
-      resource: {
-        values: arrayOfArrayValues
-      }
-    })
-  }
 
 
 }
