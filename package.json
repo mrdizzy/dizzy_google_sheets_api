@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/mrdizzy/dizzy_google_sheets_api/issues"
   },
-  "homepage": "https://github.com/mrdizzy/dizzy_google_sheets_api#readme"
+  "homepage": "https://github.com/mrdizzy/dizzy_google_sheets_api#readme",
+  "dependencies": {
+    "googleapis": "^46.0.0"
+  }
 }
