@@ -1,7 +1,0 @@
-spreadsheets.update({
-  spreadsheetId: "",
-  "requests": [
-  ]
-})
-               
-              

@@ -1,0 +1,24 @@
+{
+  "name": "dizzy_google_sheets_api",
+  "version": "0.0.1",
+  "description": "Some homebrew abstractions for using Google's Sheets API",
+  "main": "sheets.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdizzy/dizzy_google_sheets_api.git"
+  },
+  "keywords": [
+    "google",
+    "sheets",
+    "api"
+  ],
+  "author": "David Pettifer-Sotiropoulos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrdizzy/dizzy_google_sheets_api/issues"
+  },
+  "homepage": "https://github.com/mrdizzy/dizzy_google_sheets_api#readme"
+}

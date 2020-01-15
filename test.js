@@ -1,25 +1,11 @@
-const functions = require('firebase-functions');
-const {
-  google
-} = require("googleapis");
-
-
 const spreadsheetId = "1H2-Bo6LhYNEs4zUVmLkbH3F0t1mPoCpZMBA1DBap7A8";
-let credentials = require("./credentials.json");
+let credentials = require("./../credentials.json");
 const Sheets = require("./sheets");
 
-exports.testPromises = functions.https.onRequest((request, res) => {
-  
-  var sheets_api = new Sheets(spreadsheetId, 0, credentials);
-  sheets_api.getRowsIfColumnMatches(["GM10"], "B", function(response) {
+var sheets_api = new Sheets(spreadsheetId, 0, credentials);
+sheets_api.getRowsIfColumnMatches(["GM10"], "B", function(response) {
     console.log(response);
-  })
-  res.send(200)
 })
-
-
-
-
 
 //// Testing spreadsheet actions
 //updateCells(spreadsheetId, "G5", [
