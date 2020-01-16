@@ -2,11 +2,16 @@
 
 ## Installation
 
-Use `npm install https://github.com/mrdizzy/dizzy_google_sheets_api.git--save`
+Use `npm install https://github.com/mrdizzy/dizzy_google_sheets_api.git --save`
 
 ## Initialization
 
-Require the module and set the spreadsheetId of the spreadsheet you want to use. 
+Require the module and set the spreadsheetId of the spreadsheet you want to use. The spreadsheetID can be found by looking at the URL of the sheet you are working on when using Google Sheets. Eg:
+
+https://docs.google.com/spreadsheets/d/1yLZ5W59IBxDG-8FsqPSgvkv22WySc8h--C-VkA73j9I/edit`
+`
+The spreadsheetID comes after `spreadsheets/d/SPREADSHEETID`
+
 
 ```javascript
 const Sheets = require('dizzy_google_sheets_api')
