@@ -6,7 +6,7 @@ module.exports = class Sheets {
 
     constructor(spreadsheetId, worksheetId, JWTcredentials) {
 
-        const jwt = new google.auth.JWT(JWTcredentials.client_email, null, JWTcredentials.private_key, "https://www.googleapis.com/auth/spreadsheets")
+        const jwt = new google.auth.JWT(JWTcredentials.client_email, null, JWTcredentials.private_key, ["https://www.googleapis.com/auth/spreadsheets"])
         this._sheetsApi = google.sheets({
             version: "v4",
             auth: jwt
